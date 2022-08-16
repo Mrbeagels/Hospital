@@ -1,0 +1,20 @@
+body{
+    margin: 0px;
+    padding: 0px;
+
+}
+.logo{
+    width: 110px;
+    height: 100px;
+}
+.navBg{
+    background-color: #0084A5 !important;
+
+}
+.navMenuHover:hover{
+    text-decoration: underline white 1px solid;
+    font-style: italic;
+}
+.doctorPicture{
+    width: 100%;
+}
