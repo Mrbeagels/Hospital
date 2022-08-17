@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <!-- CSS -->
     <link rel="stylesheet" href="../public/css/style.css">
+    <!-- font -->
+    <link href="http://fonts.cdnfonts.com/css/flama-medium" rel="stylesheet">
     <!-- titre -->
     <title>Hopital d'Amiens Métropole</title>
     
@@ -21,7 +23,7 @@
 <body>
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
-            <h1 class="title">Hospitale2n</h1>
+            <a class="linkDecoration" href="../controllers/pages-controller.php"><h1 class="linkDecoration">Hospitale2n</h1></a>
             <img class="logo" src="../public/img/hippocrate.png" alt="Serment d'hippocrate reprensentant une croix bleu avec un serpent blanc a l'interrieur qui s'enroute autour d'une cane">
         </div>
     </div>

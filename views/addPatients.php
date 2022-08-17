@@ -1,10 +1,13 @@
+<?php
+// ici j'include le controller add patients car j'ai besoin de la variable $errorSave
+include_once __DIR__.'/../controllers/addPatients-controller.php';
+// if(!$errorSave){
+//     echo 'erreur lors de l\'enregistrement sql ';
+// }
+?>
 <div class="container-fluid">
-    <?php if(!$errorSave){
-        echo 'erreur lors de l\'enregistrement sql '
-    }
-    ?>
     <h2 class="text-center">Créer votre profil afin de prendre rendez-vous</h2>
-    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+    <form method="POST">
         <!-- RAJOUT DU NOM DE LA TABLE EN HIDDEN -->
         <input type="hidden" name="tablename" value="Patient">
         <!--  -->
@@ -36,13 +39,7 @@
                         <small id="birthdateHelp" class="form-text error"><?= $error['birthdate'] ?? '' ?></small>
                     </div>
                 </div>
-                <div class="col-7 ">
-                    <div class="mb-4">
-                        <!-- Champs email -->
-                        <input required aria-describedby="mailHelp" type="mail" name="mail" id="mail" value="<?= htmlentities($mail ?? '') ?>" class="form-control <?= isset($error['mail']) ? 'errorField' : '' ?>" placeholder="Votre E-mail*" autocomplete="email">
-                        <small id="mailHelp" class="form-text error"><?= $error['mail'] ?? '' ?></small>
-                    </div>
-                </div>
+                <!-- phone -->
                 <div class="col-7 ">
                     <div class="mb-4">
                         <input type="number" name="phone" id="phone" value="<?= htmlentities($phone ?? '') ?>" class="form-conteol <?= isset($error['email']) ? 'errorField' : '' ?>" placeholder="Votre numéro de téléphone * " autocomplete="phone">
@@ -50,8 +47,17 @@
                         <p class="required">* : Champs obligatoires</p>
                     </div>
                 </div>
-                <div class="text-center">
-                    <input type="submit" value="Envoyer" class="btn btn-primary mt-3" id="validForm">
+                <div class="col-7 ">
+                    <div class="mb-4">
+                        <!-- Champs email -->
+                        <input required aria-describedby="mailHelp" type="mail" name="mail" id="mail" value="<?= htmlentities($mail ?? '') ?>" class="form-control <?= isset($error['mail']) ? 'errorField' : '' ?>" placeholder="Votre E-mail*" autocomplete="email">
+                        <small id="mailHelp" class="form-text error"><?= $error['mail'] ?? '' ?></small>
+                    </div>
+                </div>
+                
+                
+                <div class="text-center">                   
+                        <input type="submit" value="Envoyer" class="btn btn-primary mt-3" id="validForm">
                 </div>
             </div>
         </fieldset>

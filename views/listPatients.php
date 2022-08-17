@@ -1,8 +1,15 @@
-<?php 
-include __DIR__.'/views/listPatients.php';
+<?php
+require_once __DIR__.'/../controllers/listPatients-controller.php';
 ?>
+<h1 class="text-center">Liste des patients</h1>
 
-<pre>
-    <h1>Liste des patients présents dans la base de données</h1>
-    <?= $patients;?>
-</pre>
+<!-- <div class="container-fluid bg-info">
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-2"></div>
+    <div class="col-2"></div>
+    <div class="col-2"></div>
+    <div class="col-2"></div>
+</div>
+</div> -->
+

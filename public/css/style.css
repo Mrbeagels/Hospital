@@ -1,6 +1,8 @@
 body{
     margin: 0px;
     padding: 0px;
+    font-family: 'Flama Medium', sans-serif;
+                                                
 
 }
 .logo{
@@ -17,4 +19,8 @@ body{
 }
 .doctorPicture{
     width: 100%;
+}
+.linkDecoration{
+color: black;
+text-decoration: none;
 }

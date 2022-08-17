@@ -55,18 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 }
             }
         }
-
-                //===================== email : Nettoyage et validation =======================
-    $mail = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
-
-    if (!empty($mail)) {
-        $testMail = filter_var($mail, FILTER_VALIDATE_EMAIL);
-        if (!$testMail) {
-            $error["mail"] = "L'adresse email n'est pas au bon format!!";
-        }
-    } else {
-        $error["mail"] = "L'adresse mail est obligatoire!!";
-    }
 //===================== phone : Nettoyage et validation =======================
     $phone = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_NUMBER_INT));
     if (!empty($phone)){
@@ -75,20 +63,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             $error["phone"] = "Vous devez entrer un numéro de téléphone valide";
         }
     }
-}
+                    //===================== email : Nettoyage et validation =======================
+                    $mail = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
+
+                    if (!empty($mail)) {
+                        $testMail = filter_var($mail, FILTER_VALIDATE_EMAIL);
+                        if (!$testMail) {
+                            $error["mail"] = "L'adresse email n'est pas au bon format!!";
+                        }
+                    } else {
+                        $error["mail"] = "L'adresse mail est obligatoire!!";
+                    }
+
 
 if(empty($error)){
     $patient = new patient;
-    $patient->setFirstname($firstname);
     $patient->setLastname($lastname);
+    $patient->setFirstname($firstname);
     $patient->setBirthdate($birthdate);
-    $patient->setMail($mail);
     $patient->setPhone($phone);
-    $error['save']=$patient->save();
+    $patient->setMail($mail);
+    $errorSave=$patient->save();
+    if($errorSave){
+        header('location: confirmation-controller.php');
+    }
 } else {
     var_dump($error);
 }
-
+}
 
 include(__DIR__.'/../views/header.php');
 include(__DIR__.'/../views/addPatients.php');
