@@ -1,15 +1,16 @@
 <div class="container-fluid">
+    <?php if(!$errorSave){
+        echo 'erreur lors de l\'enregistrement sql '
+    }
+    ?>
     <h2 class="text-center">Créer votre profil afin de prendre rendez-vous</h2>
     <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+        <!-- RAJOUT DU NOM DE LA TABLE EN HIDDEN -->
+        <input type="hidden" name="tablename" value="Patient">
+        <!--  -->
         <fieldset>
             <!-- champs Prénom -->
             <div class="row d-flex justify-content-center mt-5">
-                <div class="col-7">
-                    <div class="mb-4">
-                        <input type="text" name="firstname" id="firstname" title="Veuillez entrer un prénom sans chiffre" placeholder="Entrez votre prénom *" class="form-control <?= isset($error['firstname']) ? 'errorField' : '' ?>" autocomplete="first-name" value="<?= htmlentities($firstname ?? '') ?>" minlength="2" maxlength="70" pattern="<?= REGEX_NO_NUMBER ?>">
-                        <small id="firstnameHelp" class="form-text error"><?= $error['firstname'] ?? '' ?></small>
-                    </div>
-                </div>
                 <!-- Champs NOM -->
                 <div class="col-7">
                     <div class="mb-4">
@@ -18,6 +19,15 @@
                         <small id="lastnameHelp" class="form-text error"><?= $error['lastname'] ?? '' ?></small>
                     </div>
                 </div>
+
+                <div class="col-7">
+                    <div class="mb-4">
+                        <input type="text" name="firstname" id="firstname" title="Veuillez entrer un prénom sans chiffre" placeholder="Entrez votre prénom *" class="form-control <?= isset($error['firstname']) ? 'errorField' : '' ?>" autocomplete="first-name" value="<?= htmlentities($firstname ?? '') ?>" minlength="2" maxlength="70" pattern="<?= REGEX_NO_NUMBER ?>">
+                        <small id="firstnameHelp" class="form-text error"><?= $error['firstname'] ?? '' ?></small>
+                    </div>
+                </div>
+                <!-- Champs NOM -->
+
                 <div class="col-7">
                     <div class="mb-4">
                         <!-- Champs date de naissance -->
@@ -29,8 +39,8 @@
                 <div class="col-7 ">
                     <div class="mb-4">
                         <!-- Champs email -->
-                        <input required aria-describedby="emailHelp" type="email" name="email" id="email" value="<?= htmlentities($email ?? '') ?>" class="form-control <?= isset($error['email']) ? 'errorField' : '' ?>" placeholder="Votre E-mail*" autocomplete="email">
-                        <small id="emailHelp" class="form-text error"><?= $error['email'] ?? '' ?></small>
+                        <input required aria-describedby="mailHelp" type="mail" name="mail" id="mail" value="<?= htmlentities($mail ?? '') ?>" class="form-control <?= isset($error['mail']) ? 'errorField' : '' ?>" placeholder="Votre E-mail*" autocomplete="email">
+                        <small id="mailHelp" class="form-text error"><?= $error['mail'] ?? '' ?></small>
                     </div>
                 </div>
                 <div class="col-7 ">

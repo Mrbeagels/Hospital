@@ -1,6 +1,6 @@
 <?php
-include(dirname(__FILE__) . '/../config/config.php');
-include(__DIR__.'/../views/header.php');
+require_once(dirname(__FILE__) . '/../config/config.php');
+require_once(dirname(__FILE__) . '/../models/Patient.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
 {
@@ -57,15 +57,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
 
                 //===================== email : Nettoyage et validation =======================
-    $email = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
+    $mail = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
 
-    if (!empty($email)) {
-        $testEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
-        if (!$testEmail) {
-            $error["email"] = "L'adresse email n'est pas au bon format!!";
+    if (!empty($mail)) {
+        $testMail = filter_var($mail, FILTER_VALIDATE_EMAIL);
+        if (!$testMail) {
+            $error["mail"] = "L'adresse email n'est pas au bon format!!";
         }
     } else {
-        $error["email"] = "L'adresse mail est obligatoire!!";
+        $error["mail"] = "L'adresse mail est obligatoire!!";
     }
 //===================== phone : Nettoyage et validation =======================
     $phone = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_NUMBER_INT));
@@ -76,5 +76,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
     }
 }
+
+if(empty($error)){
+    $patient = new patient;
+    $patient->setFirstname($firstname);
+    $patient->setLastname($lastname);
+    $patient->setBirthdate($birthdate);
+    $patient->setMail($mail);
+    $patient->setPhone($phone);
+    $error['save']=$patient->save();
+} else {
+    var_dump($error);
+}
+
+
+include(__DIR__.'/../views/header.php');
 include(__DIR__.'/../views/addPatients.php');
 include(__DIR__.'/../views/footer.php');

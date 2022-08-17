@@ -1,4 +1,7 @@
 <?php
+
+require_once(dirname(__FILE__) . '/../helpers/connexion.php');
+
 class Patient
 {
     private int $id;
@@ -7,11 +10,11 @@ class Patient
     private string $birthdate;
     private string $phone;
     private string $mail;
+    private $pdo;
 
-    public function __construct($id = 0)
+    public function __construct()
     {
-        $this->id = $id;
-        $this ->id = $id ++;
+        $this->pdo =DBconnect();
     }
         // get / set Id
 
@@ -80,6 +83,32 @@ class Patient
         public function setMail( string $mail) :void
         {
             $this ->mail =$mail;
+        }
+        // ici je créer une fonction save qui est call dans le addpatient-controller afin de sauvegarder les patient
+        public function save (){
+            try{
+                $sql ='INSERT INTO patients ( `lastname`,`firstname`, `birthdate`, `mail`, `phone`) VALUE (
+                    :lastname,
+                    :firstname,
+                    :birthdate,
+                    :mail,
+                    :phone
+                    )';
+                    $sth=$this->pdo->prepare($sql);
+                    $sth->bindValue(':lastname', $this->lastname, pdo::PARAM_STR);
+                    $sth->bindValue(':firstname', $this->firstname, pdo::PARAM_STR);
+                    $sth->bindValue(':birthdate', $this->birthdate, pdo::PARAM_STR);
+                    $sth->bindValue(':mail', $this->mail, pdo::PARAM_STR);
+                    $sth->bindValue(':phone', $this->phone, pdo::PARAM_INT);
+                    $result=$sth->execute();
+                    if(!$result){
+                        throw new PDOException("problémes lors de l'enregistrement SQL");
+                    }
+                    return true;
+            }catch (PDOException $ex){
+                echo'mdr' .$ex->getMessage();
+                return false;
+            }
         }
 
 }

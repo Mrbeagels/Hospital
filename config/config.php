@@ -13,3 +13,7 @@ define('REGEX_PHONE','^[0-9]{10}');
 define('CIVILITY', ['HOMME', 'FEMME', 'AUTRE']);
 define('AUTHORIZED_IMAGE_FORMAT', ['image/jpeg', 'image/png']);
 define('ARRAY_COUNTRIES', ['France', 'Suisse', 'Allemagne', 'Italie']);
+
+define('DBNAME','hospitale2n');
+define('BDUSER','root');
+define('DBPWD', '');
