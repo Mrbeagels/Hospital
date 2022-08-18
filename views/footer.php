@@ -4,15 +4,10 @@
             <!-- Section: Social media -->
             <section class="mb-4">
                 <!-- Github -->
-                <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/Mrbeagels" role="button"><i
+                <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/Mrbeagels" target="_blank" role="button"><i
                         class="bi bi-github"></i></a>
-
-                <!-- Twitter -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                        class="bi bi-discord"></i></a>
-
                 <!-- Google -->
-                <a class="btn btn-outline-light btn-floating m-1"
+                <a class="btn btn-outline-light btn-floating m-1" target="_blank"
                     href="https://www.linkedin.com/in/thibaud-marin-25a0b023a/" role="button"><i
                         class="bi bi-linkedin"></i></a>
             </section>

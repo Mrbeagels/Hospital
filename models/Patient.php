@@ -84,6 +84,28 @@ class Patient
         {
             $this ->mail =$mail;
         }
+
+        // Création d'une méthode afin de voir un user est déjà enregistrer 
+        public static function isMailExists(string $mail) : int
+        {
+            try{
+                
+                $pdo =DBconnect();
+                $sql = "SELECT `id` FROM `patients` WHERE `mail` =:mail";
+                $sth = $pdo->prepare($sql);
+                $sth->bindValue(':mail', $mail, PDO::PARAM_STR);
+                if( $sth->execute()){
+                    $row = $sth->fetch();
+                    return($row)?1:0;
+                }
+                else{
+                    return 2;
+                }
+                }catch(PDOException $ex){
+                        return 2;
+                }
+        }
+
         // ici je créer une fonction save qui est call dans le addpatient-controller afin de sauvegarder les patient
         public function save (){
             try{
@@ -98,7 +120,7 @@ class Patient
                     $sth->bindValue(':lastname', $this->lastname, pdo::PARAM_STR);
                     $sth->bindValue(':firstname', $this->firstname, pdo::PARAM_STR);
                     $sth->bindValue(':birthdate', $this->birthdate, pdo::PARAM_STR);
-                    $sth->bindValue(':phone', $this->phone, pdo::PARAM_INT);
+                    $sth->bindValue(':phone', $this->phone, pdo::PARAM_STR);
                     $sth->bindValue(':mail', $this->mail, pdo::PARAM_STR);
                     $result=$sth->execute();
                     if(!$result){
@@ -111,32 +133,24 @@ class Patient
             }
         }
 
-        public function getAll(){
-            $allPatients = [];
+        public static function getAll() : array
+        {
             try{
                 // connexion a la BDD
                 $pdo=DBconnect();
                 // La requete en elle meme 
                 $sql="SELECT * FROM `Patients` ORDER BY `lastname` DESC";
                 // préparation de la requete
-                $stmt=$pdo->prepare($sql);
+                $sth=$pdo->prepare($sql);
                 // on exécute la requete
-                if($stmt->execute()){
-                    $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
-                foreach ($rows as $key => $row) {
-                    $this->rows = $rows;
-                    $allPatients[$key][0]=$row->lastname;
-                    $allPatients[$key][1]=$row->firstname;
-                    $allPatients[$key][2]=$row->birthdate;
-                    $allPatients[$key][4]=$row->phone;
-                    $allPatients[$key][3]=$row->mail;
-                }
-                return $allPatients;
+                if($sth->execute()){
+                    $allPatients = $sth->fetchAll();
+                    return $allPatients;
                 } else {
-                    return false;
+                    return [];
                 }
             } catch (PDOException $ex){
-                echo 'erreur dans la requête' . $ex->getMessage();
+                return [];
             }
         }
 

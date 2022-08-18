@@ -1,15 +1,14 @@
-<?php
-require_once __DIR__.'/../controllers/listPatients-controller.php';
-?>
 <h1 class="text-center">Liste des patients</h1>
 
-<!-- <div class="container-fluid bg-info">
-<div class="row">
-    <div class="col-2"></div>
-    <div class="col-2"></div>
-    <div class="col-2"></div>
-    <div class="col-2"></div>
-    <div class="col-2"></div>
-</div>
-</div> -->
-
+<?php
+foreach ($allPatients as $key => $value)
+{?>
+    <div class='d-flex justify-content-center'>
+            <p> <span class='text-info'>Nom :</span> <?=$value->lastname?> <br>
+            <span class='text-info'>Prénom :</span> <?= $value->firstname?> <br> 
+            <span class='text-info'>Date de naissance :</span> <?=$value->birthdate?> <br>
+            <span class='text-info'>Numéro de téléphone :</span> <a class="linkDecoration" href="tel:<?=$value->phone?>"><?=$value->phone?></a> <br>
+            <span class='text-info'>Adresse Mail :</span> <a class="linkDecoration" href="mailto:<?=$value->mail?>"> <?=$value->mail?></a> </p>
+    </div>
+    <?php
+}

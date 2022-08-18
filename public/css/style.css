@@ -2,8 +2,6 @@ body{
     margin: 0px;
     padding: 0px;
     font-family: 'Flama Medium', sans-serif;
-                                                
-
 }
 .logo{
     width: 110px;
@@ -11,7 +9,9 @@ body{
 }
 .navBg{
     background-color: #0084A5 !important;
-
+}
+#header{
+    background-color: #0084A5 !important;
 }
 .navMenuHover:hover{
     text-decoration: underline white 1px solid;

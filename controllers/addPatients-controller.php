@@ -71,6 +71,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                         if (!$testMail) {
                             $error["mail"] = "L'adresse email n'est pas au bon format!!";
                         }
+                        if(Patient::isMailExists($mail)==1){
+                            $error["mail"] = "l'adresse mail est déjà existante";
+                        }
+                        elseif (Patient::isMailExists($mail)==2){
+                            $error["mail"] = "La requete SQL n'est pas bonne";
+                        }
                     } else {
                         $error["mail"] = "L'adresse mail est obligatoire!!";
                     }

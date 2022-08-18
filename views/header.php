@@ -21,10 +21,10 @@
     
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center">
+    <div class="container-fluid" id="header">
+        <div class="d-flex justify-content-around align-items-center pb-5">
             <a class="linkDecoration" href="../controllers/pages-controller.php"><h1 class="linkDecoration">Hospitale2n</h1></a>
-            <img class="logo" src="../public/img/hippocrate.png" alt="Serment d'hippocrate reprensentant une croix bleu avec un serpent blanc a l'interrieur qui s'enroute autour d'une cane">
+            <a class="linkDecoration" href="../controllers/pages-controller.php"><img class="logo" src="../public/img/hippocrate.png" alt="Serment d'hippocrate reprensentant une croix bleu avec un serpent blanc a l'interrieur qui s'enroute autour d'une cane"></a>
         </div>
     </div>
 <?php
