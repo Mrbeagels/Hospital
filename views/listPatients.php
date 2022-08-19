@@ -11,7 +11,7 @@ foreach ($allPatients as $key => $value)
             <span class='text-info'>Adresse Mail :</span> <a class="linkDecoration" href="mailto:<?=$value->mail?>"> <?=$value->mail?></a> </p>
     </div>
         <div class="text-center mb-3">
-            <a href="../views/profilPatients.php?id=<?=$value->id?>"><button type="submit" class="btn btn-info">Voir le profil</button></a>
+            <a href="profilPatient-controller.php?id=<?=$value->id?>"><button type="submit" class="btn btn-info">Voir le profil</button></a>
         </div>
     <?php
 }

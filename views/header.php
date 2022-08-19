@@ -17,7 +17,14 @@
     <!-- font -->
     <link href="http://fonts.cdnfonts.com/css/flama-medium" rel="stylesheet">
     <!-- titre -->
-    <title>Hopital d'Amiens Métropole</title>
+    <title><?=$title??"hopital d'Amiens"?></title>
+    <!-- Ici je fais une redirection a 2 secondes avant de rediriger vers l'accueil -->
+    <?php
+    if(isset($redirect) && $redirect === true ){
+        ?><meta http-equiv="refresh" content="2;URL=/controllers/pages-controller.php">
+        <?php
+    }
+    ?>
     
 </head>
 <body>

@@ -146,6 +146,7 @@ class Patient
                 if($sth->execute()){
                     $allPatients = $sth->fetchAll();
                     return $allPatients;
+                    
                 } else {
                     return [];
                 }
@@ -155,23 +156,56 @@ class Patient
         }
 
 
-        public static function showProfil()
+        public static function showProfil($id) : object
         {
             try{
                 // connexion a la BDD
-                $pdo=DBconnect();
+                $pdo = DBconnect();
                  // La requete en elle meme 
-                 $sql="SELECT * FROM `Patients` WHERE `id` = ? ";
+                $sql="SELECT * FROM `Patients` WHERE `id` = :id ";
                  // préparation de la requete
                 $sth=$pdo->prepare($sql);
+                $sth->bindValue(':id', $id, pdo::PARAM_INT);
                 // on exécute la requete
+                if($sth->execute()){
+                    $idPatient=$sth->fetch();
+                        return $idPatient;
+                } else {
+                    return[];
+                }
             }
-            catch  (PDOException $ex){
+            catch  (PDOException $ex)
+            {
                 return [];
             }
-            
-            
+        }
 
+        public function update(){
+            try{
+                    $sql=   "UPDATE `patients` 
+                            SET `lastname`=:lastname,
+                            `firstname`=:firstname,
+                            `birthdate`=:birthdate,
+                            `phone`=:phone ,
+                            `mail`=:mail 
+                            WHERE `id`= :id";
+
+                    $sth=$this->pdo->prepare($sql);
+                    $sth->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+                    $sth->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
+                    $sth->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
+                    $sth->bindValue(':phone', $this->phone, PDO::PARAM_STR);
+                    $sth->bindValue(':mail', $this->mail, PDO::PARAM_STR);
+                    $sth->bindValue(':id',$this->id,PDO::PARAM_INT);
+                    $result=$sth->execute();
+                    if(!$result){
+                        throw new PDOException("problémes lors de la modification de votre profil");
+                    }
+                    return true;
+            }catch (PDOException $ex){
+                echo'mdr' .$ex->getMessage();
+                return false;
+            }
         }
 }
 

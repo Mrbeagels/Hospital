@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             $error["phone"] = "Vous devez entrer un numéro de téléphone valide";
         }
     }
-                    //===================== email : Nettoyage et validation =======================
+                    //===================== email : Nettoyage et validation et verification qu'elle ne soit pas déjà presente dans la BDD =======================
                     $mail = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
 
                     if (!empty($mail)) {
