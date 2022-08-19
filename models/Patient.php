@@ -154,6 +154,25 @@ class Patient
             }
         }
 
+
+        public static function showProfil()
+        {
+            try{
+                // connexion a la BDD
+                $pdo=DBconnect();
+                 // La requete en elle meme 
+                 $sql="SELECT * FROM `Patients` WHERE `id` = ? ";
+                 // préparation de la requete
+                $sth=$pdo->prepare($sql);
+                // on exécute la requete
+            }
+            catch  (PDOException $ex){
+                return [];
+            }
+            
+            
+
+        }
 }
 
 ?>
