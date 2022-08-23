@@ -21,7 +21,7 @@
     <!-- Ici je fais une redirection a 2 secondes avant de rediriger vers l'accueil -->
     <?php
     if(isset($redirect) && $redirect === true ){
-        ?><meta http-equiv="refresh" content="2;URL=/controllers/pages-controller.php">
+        ?><meta http-equiv="refresh" content="10;URL=/controllers/pages-controller.php">
         <?php
     }
     ?>

@@ -14,7 +14,7 @@ class Patient
 
     public function __construct()
     {
-        $this->pdo =DBconnect();
+        $this->pdo = DBconnect();
     }
         // get / set Id
 
@@ -132,14 +132,14 @@ class Patient
                 return false;
             }
         }
-
+            // rajout d'un parametre $id
         public static function getAll() : array
         {
             try{
                 // connexion a la BDD
                 $pdo=DBconnect();
                 // La requete en elle meme 
-                $sql="SELECT * FROM `Patients` ORDER BY `lastname` DESC";
+                $sql="SELECT `id`,`lastname`,`firstname`,`birthdate`,`phone`,`mail` FROM `Patients` ORDER BY `lastname` DESC";
                 // préparation de la requete
                 $sth=$pdo->prepare($sql);
                 // on exécute la requete
@@ -150,7 +150,7 @@ class Patient
                 } else {
                     return [];
                 }
-            } catch (PDOException $ex){
+            }catch (PDOException $ex){
                 return [];
             }
         }
@@ -180,7 +180,7 @@ class Patient
             }
         }
 
-        public function update(){
+        public function update($id){
             try{
                     $sql=   "UPDATE `patients` 
                             SET `lastname`=:lastname,
@@ -196,7 +196,7 @@ class Patient
                     $sth->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
                     $sth->bindValue(':phone', $this->phone, PDO::PARAM_STR);
                     $sth->bindValue(':mail', $this->mail, PDO::PARAM_STR);
-                    $sth->bindValue(':id',$this->id,PDO::PARAM_INT);
+                    $sth->bindValue(':id',$id,PDO::PARAM_INT);
                     $result=$sth->execute();
                     if(!$result){
                         throw new PDOException("problémes lors de la modification de votre profil");

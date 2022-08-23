@@ -24,3 +24,7 @@ body{
 color: black;
 text-decoration: none;
 }
+.linkDecoration:hover{
+    color: black;
+    text-decoration: underline white;
+}

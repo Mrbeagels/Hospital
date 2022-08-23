@@ -3,9 +3,13 @@ require_once(dirname(__FILE__) . '/../models/Patient.php');
 // Je recupere les données envoyé dans l'url, ici l'id du patient
 
 // je sanitize la données pour eviter les injection de code
-$id=filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+$id= intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 // J'applique ma methode show patient a cette id sanitize
-$idPatient = Patient::showProfil($id);
+// passage de $idpatient  vers objPatient
+$objPatient = Patient::showProfil($id);
+if (!$objPatient){
+    $error = "le patient n'existe pas";
+}
 
 // Je traite une deuxieme fois le formulaire
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -79,16 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     } else {
                         $error["mail"] = "L'adresse mail est obligatoire!!";
                     }
-
-                    // Le mail, ne doit pas être celui d'un autre utilisateur et ne doit pas pas déjà etre présent dans la BDD
                     
-                    // if($mail == $response->mail || !Patient::isMailExists($mail)) {
-                    //     if($patient->update($id)){
-                    //         $error= errors[4];
-                    //     }else{
-                    //         $message = error[0];
-                    //     }
-                    // }
 
                 if(empty($error)){
                     $patient = new patient;
@@ -98,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     $patient->setPhone($phone);
                     $patient->setMail($mail);
                     $patient->setId($id);
-                    $errorSave=$patient->update();
+                    $errorSave=$patient->update($id);
                     if($errorSave){
                         header('location: confirmation-controller.php');
                     }
