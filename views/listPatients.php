@@ -1,17 +1,20 @@
 <h1 class="text-center">Liste des patients</h1>
 
-<?php
-foreach ($allPatients as $key => $value)
-{?>
-    <div class='d-flex justify-content-center'>
-            <p> <span class='text-info'>Nom :</span> <?=$value->lastname?> <br>
-            <span class='text-info text-center'>Prénom :</span> <?= $value->firstname?> <br> 
-            <span class='text-info'>Date de naissance :</span> <?=$value->birthdate?> <br>
-            <span class='text-info'>Numéro de téléphone :</span> <a class="linkDecoration" href="tel:<?=$value->phone?>"><?=$value->phone?></a> <br>
-            <span class='text-info'>Adresse Mail :</span> <a class="linkDecoration" href="mailto:<?=$value->mail?>"> <?=$value->mail?></a> </p>
+<main>
+    <div class="d-flex justify-content-center mt-2">
+        <h2 class="fs-3">
+            <a class="linkDecoration text-decoration-underline"" href="../controllers/addPatients-controller.php"> Créez ici un nouveau patient.</a>   
+        </h2>
     </div>
-        <div class="text-center mb-3">
-            <a href="profilPatient-controller.php?id=<?=$value->id?>"><button type="submit" class="btn btn-info">Voir le profil</button></a>
+
+    <div class="container-fluid listpatients">
+        <div class="row pb-2 pt-3 justify-content-center">
+            <?= $allPatientsDisplay ?>
         </div>
-    <?php
-}
+    </div>
+
+    <!-- Modal pour la confirmation de la suppression du patient -->
+    <?= $modalConfirmDelete ?>
+    
+    <span class="text-danger text-center"><?= $errRemove['delete']??'' ?></span>
+</main>

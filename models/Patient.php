@@ -4,6 +4,8 @@ require_once(dirname(__FILE__) . '/../helpers/connexion.php');
 
 class Patient
 {
+    // les attibuts
+
     private int $id;
     private string $lastname;
     private string $firstname;
@@ -12,9 +14,15 @@ class Patient
     private string $mail;
     private $pdo;
 
-    public function __construct()
-    {
-        $this->pdo = DBconnect();
+    // Le construct
+
+    public function __construct(string $lastname = '', string $firstname = '', string $birthdate = '', string $phone = '', string $mail = '')
+    {       $this->setLastname($lastname);
+            $this->setfirstname($firstname);
+            $this->setBirthdate($birthdate);
+            $this->setPhone($phone);
+            $this->setMail($mail);
+        $this->pdo = DATABASE::DBconnect();
     }
         // get / set Id
 
@@ -85,12 +93,12 @@ class Patient
             $this ->mail =$mail;
         }
 
-        // Création d'une méthode afin de voir un user est déjà enregistrer 
-        public static function isMailExists(string $mail) : int
+        // Création d'une méthode afin de voir un mail est déjà enregistrer 
+        public static function isMailExists(string $mail) : mixed
         {
             try{
                 
-                $pdo =DBconnect();
+                $pdo =DATABASE::DBconnect();
                 $sql = "SELECT `id` FROM `patients` WHERE `mail` =:mail";
                 $sth = $pdo->prepare($sql);
                 $sth->bindValue(':mail', $mail, PDO::PARAM_STR);
@@ -106,8 +114,27 @@ class Patient
                 }
         }
 
+        public static function getByMail (string $mail) : mixed
+        {
+            $pdo = DATABASE::DBconnect();
+            try{
+                $sql="SELECT * FROM `patients` WHERE `mail` = :mail";
+                $sth = $pdo->prepare($sql);
+                $sth->bindValue(':mail', $mail, PDO::PARAM_STR);
+                if(!$sth->execute()) {
+                    throw new PDOException(("probleme dans la requete"));
+                }else{
+                    return  $sth->FETCH();
+                }
+            }
+            catch (PDOException $ex){
+                return false;
+            }
+        }
+
         // ici je créer une fonction save qui est call dans le addpatient-controller afin de sauvegarder les patient
-        public function save (){
+        public function save () : bool 
+        {
             try{
                 $sql ='INSERT INTO patients ( `lastname`,`firstname`, `birthdate`,`phone` ,`mail`) VALUE (
                     :lastname,
@@ -132,35 +159,35 @@ class Patient
                 return false;
             }
         }
-            // rajout d'un parametre $id
-        public static function getAll() : array
-        {
-            try{
-                // connexion a la BDD
-                $pdo=DBconnect();
-                // La requete en elle meme 
-                $sql="SELECT `id`,`lastname`,`firstname`,`birthdate`,`phone`,`mail` FROM `Patients` ORDER BY `lastname` DESC";
-                // préparation de la requete
-                $sth=$pdo->prepare($sql);
-                // on exécute la requete
-                if($sth->execute()){
-                    $allPatients = $sth->fetchAll();
-                    return $allPatients;
-                    
-                } else {
-                    return [];
-                }
-            }catch (PDOException $ex){
-                return [];
-            }
-        }
 
+         // LECTURE DE TOUS LES PATIENTS DANS LA BDD
+        public static function getAll () : array {
+            $arrayPatients = [];
+            $pdoConnect = Database::DBconnect();
+            try {
+                $sql = "SELECT `id`, `lastname`, `firstname`, `birthdate`, `phone`, `mail` FROM `patients` WHERE 1;";
+                $sth = $pdoConnect->query($sql);
+                $patients = $sth->fetchAll(PDO::FETCH_OBJ);
+                foreach ($patients as $key => $client) {
+                    $arrayPatients[$key][0] = $client->id;
+                    $arrayPatients[$key][1] = $client->lastname;
+                    $arrayPatients[$key][2] = $client->firstname;
+                    $arrayPatients[$key][3] = $client->birthdate;
+                    $arrayPatients[$key][4] = $client->phone;
+                    $arrayPatients[$key][5] = $client->mail;                            
+                }
+                return $arrayPatients;
+            }
+            catch (PDOException $ex) {
+                return $arrayPatients = [];
+            }                
+        }   
 
         public static function showProfil($id) : object
         {
             try{
                 // connexion a la BDD
-                $pdo = DBconnect();
+                $pdo = DATABASE::DBconnect();
                  // La requete en elle meme 
                 $sql="SELECT * FROM `Patients` WHERE `id` = :id ";
                  // préparation de la requete
@@ -178,6 +205,20 @@ class Patient
             {
                 return [];
             }
+        }
+
+        // LECTURE D'UN PATIENT DANS LA BDD
+        public static function select (int $idSelected) : mixed {
+            $pdoConnect = Database::DBconnect();
+            try {
+                $sql = "SELECT `id`, `lastname`, `firstname`, `birthdate`, `phone`, `mail` FROM `patients` WHERE `id` = $idSelected;";
+                $sth = $pdoConnect->query($sql);
+                $arrayPatient = $sth->fetch(PDO::FETCH_OBJ);
+                return $arrayPatient;
+            }
+            catch (PDOException $ex) {
+                return false;
+            }                
         }
 
         public function update($id){
@@ -207,6 +248,20 @@ class Patient
                 return false;
             }
         }
+
+        // SUPPRESSION DU RENDEZ-VOUS CIBLE DANS LA BDD function de stephane, a voir si il faut la mofifier
+        public static function delete (int $idSelected) : bool {
+            $pdoConnect = Database::dbConnect();
+            try {
+                $sql = "DELETE FROM `patients` WHERE `id` = $idSelected;"; 
+                $sth = $pdoConnect->query($sql);
+                return true;
+            }
+            catch (PDOException $ex) {
+                return false;
+            }                
+        }
+    
 }
 
 ?>

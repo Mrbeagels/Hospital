@@ -13,7 +13,13 @@ define('REGEX_PHONE','^[0-9]{10}');
 define('CIVILITY', ['HOMME', 'FEMME', 'AUTRE']);
 define('AUTHORIZED_IMAGE_FORMAT', ['image/jpeg', 'image/png']);
 define('ARRAY_COUNTRIES', ['France', 'Suisse', 'Allemagne', 'Italie']);
+define('USERS', ['HTML/CSS', 'Javascript', 'Php', 'Python']);
 
 define('DBNAME','hospitale2n');
 define('BDUSER','root');
 define('DBPWD', '');
+
+ // Define global variable for error message
+ define('ERROR_EMPTY', 'Le champ est vide.');
+ define('ERROR_REGEX', 'Le champ ne correspond pas à ce qui est demandé.');
+ define('ERROR_CONTAIN', 'La valeur n\'est pas présente dans le tableau');

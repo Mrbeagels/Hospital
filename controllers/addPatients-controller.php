@@ -7,8 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     //===================== Lastname : Nettoyage et validation =======================
     $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES));
         // On vérifie que ce n'est pas vide
-        var_dump($lastname);
-            die;
+
         if (!empty($lastname)) {
             $testRegex = filter_var($lastname, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_NO_NUMBER . '/')));
             // Avec une regex (constante déclarée plus haut), on vérifie si c'est le format attendu 
